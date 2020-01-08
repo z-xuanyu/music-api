@@ -1,8 +1,15 @@
 const mongoose = require("mongoose")
 const express = require('express')
 const app = express()
+const cors = require("cors")
+app.use(express.json())
+
+// 解决跨域问题 
+app.use(cors())
 // 数据爬取
 require("./Crawler/recommendCrawler")
+require("./Crawler/detailCrawler")
+const detail = require("./Crawler/detailCrawler")
 // 数据库连接
 mongoose.connect("mongodb://121.42.14.221:27017/music-test", { useUnifiedTopology: true, useNewUrlParser: true }).then(res => {
     console.log("连接成功")
@@ -15,7 +22,7 @@ mongoose.connect("mongodb://121.42.14.221:27017/music-test", { useUnifiedTopolog
  * 
  * 
  * 
- * */ 
+ * */
 
 //  监听端口
 app.listen(3001, () => {
@@ -23,5 +30,8 @@ app.listen(3001, () => {
 })
 // 所有用户名信息路由
 app.get("/", require('./router/users'))
-// recommend 路由
-app.get("/api/recommend",require('./router/recommend'))
+// recommend  歌曲推荐页路由
+app.get("/api/recommend", require('./router/recommend'))
+// detail  歌曲详情页 路由
+app.use("/api/detail/:id", detail(), require('./router/detail'))
+
