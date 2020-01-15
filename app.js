@@ -10,6 +10,9 @@ app.use(cors())
 require("./Crawler/recommendCrawler")
 require("./Crawler/detailCrawler")
 const detail = require("./Crawler/detailCrawler")
+require("./Crawler/singerCrawler")
+const { getLyric } = require("./Crawler/lyricCrawler")
+require("./Crawler/getSongList")
 // 数据库连接
 mongoose.connect("mongodb://121.42.14.221:27017/music-test", { useUnifiedTopology: true, useNewUrlParser: true }).then(res => {
     console.log("连接成功")
@@ -34,4 +37,7 @@ app.get("/", require('./router/users'))
 app.get("/api/recommend", require('./router/recommend'))
 // detail  歌曲详情页 路由
 app.use("/api/detail/:id", detail(), require('./router/detail'))
-
+// singer 歌手列表 路由
+app.get("/api/singer",require('./router/singer'))
+// 获取歌词
+app.post("/api/lyric",getLyric)
