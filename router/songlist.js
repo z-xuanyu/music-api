@@ -58,5 +58,4 @@ module.exports = async function (req, res) {
         const songData = await songListData.find({})
         res.send(songData)
     })
-    res.send(data)
 }
