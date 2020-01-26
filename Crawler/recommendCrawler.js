@@ -13,6 +13,7 @@ module.exports = request({
         data: `{"comm":{"g_tk":5381,"uin":"","format":"json","inCharset":"utf-8","outCharset":"utf-8","notice":0,"platform":"h5","needNewCode":1},"MusicHallHomePage":{"module":"music.musicHall.MusicHallPlatform","method":"MobileWebHome","param":{"ShelfId":[101,102,161]}},"hotkey":{"module":"tencent_musicsoso_hotkey.HotkeyService","method":"GetHotkeyForQQMusicMobile","param":{"remoteplace":"txt.miniapp.wxada7aab80ba27074","searchid":"1559616839293"}}}`
     }
 }, async (err, req, body) => {
+    console.log(body    )
     await recommendDate.deleteMany({}) //爬取新的数据后先清空数据库再覆盖数据
     // 处理爬取过来新数据
     let data = JSON.parse(body).MusicHallHomePage.data.v_shelf;
@@ -39,10 +40,6 @@ module.exports = request({
         recommendDate.create({
             category: category,
             categoryList: arr
-        }).then(() => {
-            console.log("数据库存储成功")
-        }).catch(() => {
-            console.log("数据库存储失败")
         })
     })
 })

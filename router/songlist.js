@@ -25,7 +25,6 @@ module.exports = async function (req, res) {
         referer:`https://y.qq.com/n/yqq/playlist/${songListId}.html`
     }
     }, async function(err,req,body){
-    
         const data = JSON.parse(body).cdlist[0]
         let obj = {} //预存歌单列表数据对象
         obj.title = data.dissname   //歌单标题
